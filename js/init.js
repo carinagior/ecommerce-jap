@@ -17,7 +17,6 @@ var hideSpinner = function(){
 
 var getJSONData = function(url){
     var result = {};
-    showSpinner();
     return fetch(url)
     .then(response => {
       if (response.ok) {
@@ -29,19 +28,29 @@ var getJSONData = function(url){
     .then(function(response) {
           result.status = 'ok';
           result.data = response;
-          hideSpinner();
           return result;
     })
     .catch(function(error) {
         result.status = 'error';
         result.data = error;
-        hideSpinner();
         return result;
     });
 }
 
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function(e){
+// Redirección a login
+
+if (!sessionStorage.getItem("logged") && 
+window.location.href.endsWith("login.html")==false){
+    window.location.replace("./login.html")}
+
+// Usuario
+
+document.addEventListener("DOMContentLoaded", function (e) {
+
+  let userLogged = sessionStorage.getItem("logged");
+
+  if (userLogged) {
+    document.getElementById("usuario").innerHTML = localStorage.getItem('cuenta');
+    
+  }
 });
