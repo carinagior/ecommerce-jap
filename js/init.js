@@ -54,3 +54,12 @@ document.addEventListener("DOMContentLoaded", function (e) {
     
   }
 });
+
+// Cerrar sesión
+
+if (window.location.href.endsWith("login.html")==false) {
+  document.getElementById('logout').addEventListener("click", function() {
+    sessionStorage.removeItem("logged");
+    window.location.replace("./login.html");
+  });
+}

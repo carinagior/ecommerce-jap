@@ -20,7 +20,7 @@ function showProducts(array) {
 
             if (buscar == undefined || product.name.toLowerCase().indexOf(buscar) != -1) {
                 htmlContentToAppend += `
-                <a href="category-info.html" class="list-group-item list-group-item-action">
+                <a href="product-info.html?producto=` + product.name + `" class="list-group-item list-group-item-action">
                     <div class="row pb-2">
                         <div class="col-3">
                             <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
@@ -28,7 +28,7 @@ function showProducts(array) {
                         <div class="col">
                             <div class="d-flex w-100 justify-content-between">
                                 <h4 class="mb-1">`+ product.name +`</h4>
-                                <small class="text-muted"> USD ` + product.cost + `</small>
+                                <small class="text-muted">` + product.currency + " " + product.cost + `</small>
                             </div>
                             <p class="mb-1">` + product.description + `</p>
                         </div>
@@ -72,9 +72,9 @@ function sortProducts(criterio, array) {
 }
 
 document.addEventListener("DOMContentLoaded", function (e) {
-    getJSONData(PRODUCTS_URL).then(function (resultado) {
-        if (resultado.status === "ok") {
-            productsArray = resultado.data;
+    getJSONData(PRODUCTS_URL).then(function (resultObj) {
+        if (resultObj.status === "ok") {
+            productsArray = resultObj.data;
             showProducts(productsArray);
         }
     });
@@ -83,13 +83,13 @@ document.addEventListener("DOMContentLoaded", function (e) {
         minPrice = document.getElementById('filtroProdCountMin').value;
         maxPrice = document.getElementById('filtroProdCountMax').value;
 
-        if ((minPrice != undefined) && (minPrice != '' && parseInt(minPrice)) >= 0) {
+        if ((minPrice != undefined) && minPrice != '' && parseInt(minPrice) >= 0) {
             minPrice = parseInt(minPrice);
         } else {
             minPrice = undefined
         }
 
-        if ((maxPrice != undefined) && (maxPrice != '' && parseInt(maxPrice)) >= 0) {
+        if ((maxPrice != undefined) && maxPrice != '' && parseInt(maxPrice) >= 0) {
             maxPrice = parseInt(maxPrice);
         } else {
             maxPrice = undefined
